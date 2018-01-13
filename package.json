@@ -1,0 +1,63 @@
+{
+    "name": "codebuddha.io",
+    "version": "0.0.0",
+    "description": "An open repository of basic applications for developers.",
+    "main": "index.js",
+    "scripts": {
+        "prod": "webpack --env=prod && npm run uglify",
+        "dev": "webpack-dev-server --env=dev",
+        "uglify": "uglifyjs -c -m -o dist/js/bundle.js -- dist/js/bundle.js",
+        "clean": "npm outdated && npm prune",
+        "server": "cd dist/ && http-server -a 0.0.0.0 -p 8080 -c-1",
+        "serve": "npm run server",
+        "test": "mocha --trace-warnings"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/iSkore/codebuddha.io.git"
+    },
+    "keywords": [
+        "basic",
+        "developer",
+        "apps"
+    ],
+    "author": "Nick Soggin",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/iSkore/codebuddha.io/issues"
+    },
+    "homepage": "https://github.com/iSkore/codebuddha.io#readme",
+    "dependencies": {
+        "bootstrap-beta": "^4.0.0-beta",
+        "font-awesome": "^4.7.0",
+        "jquery": "^3.2.1",
+        "popper.js": "^1.12.9"
+    },
+    "devDependencies": {
+        "autoprefixer": "^7.2.5",
+        "babel-core": "^6.26.0",
+        "babel-loader": "^7.1.2",
+        "babel-polyfill": "^6.26.0",
+        "babel-preset-env": "^1.6.1",
+        "babelify": "^8.0.0",
+        "copy-webpack-plugin": "^4.3.1",
+        "css-loader": "^0.28.8",
+        "extract-text-webpack-plugin": "^3.0.2",
+        "file-loader": "^1.1.6",
+        "html-webpack-plugin": "^2.30.1",
+        "json-loader": "^0.5.7",
+        "node-sass": "^4.7.2",
+        "nodemon": "^1.14.11",
+        "optimize-css-assets-webpack-plugin": "^3.2.0",
+        "postcss-loader": "^2.0.10",
+        "precss": "^2.0.0",
+        "sass-loader": "^6.0.6",
+        "style-loader": "^0.19.1",
+        "uglifyjs-webpack-plugin": "^1.1.6",
+        "url-loader": "^0.6.2",
+        "webpack": "^3.10.0",
+        "webpack-dev-server": "^2.10.1",
+        "webpack-hot-middleware": "^2.21.0",
+        "webpack-merge": "^4.1.1"
+    }
+}
