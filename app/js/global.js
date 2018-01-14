@@ -5,8 +5,52 @@
  *******************************************************************************************************/
 'use strict';
 
-// import config from '../../package';
+import config from './config';
 
 $( document ).ready( () => {
-    // $( '#toolbar' ).add( `<li class="nav-item">${config.version}</li>` );
+    const apps = $( '#applications' );
+
+    console.log( config );
+    config.applications.forEach(
+        app => {
+            const
+                group = $( '<div>' ),
+                card  = $( '<div>' ),
+                body  = $( '<div>' ),
+                title = $( '<h5>' ),
+                desc  = $( '<p>' ),
+                open  = $( '<button>' );
+
+            group.addClass( 'col-sm mb-5' );
+
+            card
+                .addClass( 'card' )
+                .css( { width: '18rem' } )
+                .appendTo( group );
+
+            body
+                .addClass( 'card-body' )
+                .appendTo( card );
+
+            title
+                .addClass( 'card-title' )
+                .text( app.title )
+                .appendTo( body );
+
+            desc
+                .addClass( 'card-text' )
+                .text( app.desc )
+                .appendTo( body );
+
+            open
+                .addClass( 'btn btn-primary' )
+                .attr( 'type', 'button' )
+                .attr( 'data-toggle', 'modal' )
+                .attr( 'data-target', '#appModal' )
+                .text( 'Open' )
+                .appendTo( body );
+
+            apps.append( group );
+        }
+    );
 } );
