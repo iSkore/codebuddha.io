@@ -2,6 +2,5 @@
 
 import 'babel-polyfill';
 import '../css/main.scss';
-import 'bootstrap-beta';
+import 'bootstrap';
 import './global';
-
