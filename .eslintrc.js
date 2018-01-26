@@ -286,7 +286,7 @@ module.exports = {
         ],
         'template-curly-spacing': [
             1,
-            'never'
+            'always'
         ],
         'use-isnan': 1,
         'valid-jsdoc': [

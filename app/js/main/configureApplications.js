@@ -8,14 +8,15 @@
 import config from '../config';
 
 export default function() {
-    const apps = $( config.appContainerId );
+    const
+        apps         = $( config.appContainerId ),
+        modelTitle   = $( config.appModuleTitleId ),
+        modelFooter  = $( config.appModuleFooterId ),
+        appContainer = $( config.appModuleContainerId );
 
     console.log( config );
     config.applications.map(
         app => {
-            console.log( app.route );
-            // app.route = require( app.route );
-            
             const
                 group = $( '<div>' ),
                 card  = $( '<div>' ),
@@ -49,12 +50,24 @@ export default function() {
                 .addClass( 'btn btn-primary' )
                 .attr( 'type', 'button' )
                 .attr( 'data-toggle', 'modal' )
-                .attr( 'data-target', '#appModal' )
+                .attr( 'data-target', config.appModuleId )
                 .text( 'Open' )
                 .click(
-                    () => {}
+                    () => {
+                        appContainer.html( `<div>${ app.html }</div>` );
+                        app.js.default();
+                    }
                 )
                 .appendTo( body );
+
+
+            modelTitle.text( app.title );
+
+            modelFooter.html();
+            app.footerItems.forEach(
+                item => modelFooter.append( item )
+            );
+            modelFooter.append( config.defaultCloseButton );
 
             app.group = group;
             apps.append( group );

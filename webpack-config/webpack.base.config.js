@@ -87,6 +87,15 @@ export default {
                 test: /\.js/,
                 exclude: /node_modules/,
                 loader: 'babel-loader'
+            },
+            {
+                test: /\.(html)$/,
+                use: {
+                    loader: 'html-loader',
+                    options: {
+                        // attrs: [':data-src']
+                    }
+                }
             }
         ]
     },

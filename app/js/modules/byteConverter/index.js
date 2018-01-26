@@ -5,15 +5,6 @@
  *******************************************************************************************************/
 'use strict';
 
-export const html = new Promise(
-    ( res, rej ) => {
-        $.get( 'module.html', function( data ) {
-            console.log( data );
-            $( this ).children( 'div:first' ).html( data );
-        } );
-    }
-);
-
 export default function() {
-
+    console.log( 'hello' );
 }
