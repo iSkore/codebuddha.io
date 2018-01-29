@@ -7,11 +7,8 @@
 
 export default function() {
     const
-        a_input = $( '#a-input' ),
-        b_input = $( '#b-input' );
-
-    console.log( $( '.dropdown-menu' ) );
-
+        n1_input = $( '#n1-input' ),
+        n2_input = $( '#n2-input' );
 
     console.log( 'hello' );
 }

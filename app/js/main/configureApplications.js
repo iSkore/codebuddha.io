@@ -6,6 +6,8 @@
 'use strict';
 
 import config from '../config';
+import { objectId } from '../utils/util';
+import CRC32 from 'faster-crc32';
 
 export default function() {
     const
@@ -24,6 +26,21 @@ export default function() {
                 title = $( '<h5>' ),
                 desc  = $( '<p>' ),
                 open  = $( '<button>' );
+
+            modelTitle.text( app.title );
+
+            modelFooter.html();
+            app.footerItems.forEach(
+                item => modelFooter.append( item )
+            );
+            modelFooter.append( config.defaultCloseButton );
+
+            app.openApplication = () => {
+                appContainer.html( `<div>${ app.html }</div>` );
+                // app.js.default();
+                console.log( app.js );
+                sessionStorage.setItem( config.currentApplicationKey, app.id );
+            };
 
             group.addClass( 'col-sm mb-5' );
 
@@ -52,27 +69,15 @@ export default function() {
                 .attr( 'data-toggle', 'modal' )
                 .attr( 'data-target', config.appModuleId )
                 .text( 'Open' )
-                .click(
-                    () => {
-                        appContainer.html( `<div>${ app.html }</div>` );
-                        app.js.default();
-                    }
-                )
+                .click( app.openApplication )
                 .appendTo( body );
-
-
-            modelTitle.text( app.title );
-
-            modelFooter.html();
-            app.footerItems.forEach(
-                item => modelFooter.append( item )
-            );
-            modelFooter.append( config.defaultCloseButton );
 
             app.group = group;
             apps.append( group );
 
-            return app;
+            return new CRC32( Buffer.from( JSON.stringify( app ) ) )
+                .then( id => app.id = id )
+                .then( () => app );
         }
     );
 }
