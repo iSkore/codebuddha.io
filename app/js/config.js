@@ -6,9 +6,10 @@
 'use strict';
 
 module.exports = {
+    currentApplicationKey: 'currentApplication',
     appContainerId: '#appContainer',
-    appModuleTitleId: '#appModuleTitle',
     appModuleId: '#appModule',
+    appModuleTitleId: '#appModuleTitle',
     appModuleFooterId: '#appModuleFooter',
     appModuleContainerId: '#appModuleContainer',
     defaultCloseButton: '<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>',
@@ -19,6 +20,16 @@ module.exports = {
             js: require( './modules/byteConverter/index' ),
             html: require( './modules/byteConverter/module.html' ),
             footerItems: []
+        },
+        {
+            title: 'process.hrtime converter',
+            desc: 'Convert the result of process.hrtime to seconds, milliseconds, etc.',
+            js: require( './modules/hrtimeConverter/index' ),
+            html: require( './modules/hrtimeConverter/module.html' ),
+            footerItems: []
         }
-    ]
+    ],
+    get: function( v ) {
+        return this.applications.filter( app => app.id === v )[ 0 ] || null;
+    }
 };
