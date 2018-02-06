@@ -20,7 +20,8 @@ module.exports = {
         'console': true,
         '$': true,
         'document': true,
-        'window': true
+        'window': true,
+        'sessionStorage': true
     },
     'rules': {
         'indent': [

@@ -1,0 +1,22 @@
+version: 0.1
+
+phases:
+  install:
+    commands:
+  pre_build:
+    commands:
+      - echo Installing source NPM dependencies...
+      - npm install
+  build:
+    commands:
+      - echo Build started on `date`
+      - echo Compiling the Node.js code
+      - npm run prod
+  post_build:
+    commands:
+      - mkdir -p build
+      - tar jcf build/myApp-$(date +%Y%m%d%H%m%S).tar.bz2 ./dist/*
+      - echo Build completed on `date`
+artifacts:
+  files:
+    - build*/**
