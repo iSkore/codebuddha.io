@@ -6,6 +6,7 @@ phases:
   pre_build:
     commands:
       - echo Installing source NPM dependencies...
+      - echo $CODEBUILD_SRC_DIR
       - npm install
   build:
     commands:
@@ -15,8 +16,9 @@ phases:
   post_build:
     commands:
       - mkdir -p build
-      - tar jcf build/myApp-$(date +%Y%m%d%H%m%S).tar.bz2 ./dist/*
-      - echo Build completed on `date`
+      - tar jcf build/codebuddah.tar.bz2 ./dist/*
+      - echo Build completed on $(date)
 artifacts:
   files:
     - build*/**
+  discard-paths: yes

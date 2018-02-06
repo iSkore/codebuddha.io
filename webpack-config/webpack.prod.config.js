@@ -12,13 +12,13 @@ export default Merge( CommonConfig, {
             minimize: false,
             debug: false
         } ),
-        new webpack.optimize.ModuleConcatenationPlugin,
+        new webpack.optimize.ModuleConcatenationPlugin(),
         new UglifyJsPlugin( {
             sourceMap: false
         } ),
         new OptimizeCssAssetsPlugin( {
             assetNameRegExp: /\.min\.css$/,
             cssProcessorOptions: { discardComments: { removeAll: true } }
-        } ),
+        } )
     ]
 } );
