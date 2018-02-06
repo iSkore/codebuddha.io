@@ -4,7 +4,7 @@
     "description": "An open repository of basic applications for developers.",
     "main": "index.js",
     "scripts": {
-        "prod": "webpack --env=prod && npm run uglify",
+        "prod": "webpack --env=prod",
         "dev": "webpack-dev-server --env=dev",
         "uglify": "uglifyjs -c -m -o dist/js/bundle.js -- dist/js/bundle.js",
         "clean": "npm outdated && npm prune",
@@ -30,7 +30,8 @@
     "dependencies": {
         "axios": "^0.17.1",
         "bootstrap": "^4.0.0",
-        "faster-crc32": "0.0.4",
+        "express": "^4.16.2",
+        "faster-crc32": "0.0.5",
         "font-awesome": "^4.7.0",
         "jquery": "^3.2.1",
         "popper.js": "^1.12.9"

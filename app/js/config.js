@@ -28,5 +28,8 @@ module.exports = {
             html: require( './modules/hrtimeConverter/module.html' ),
             footerItems: []
         }
-    ]
+    ],
+    get: function( v ) {
+        return this.applications.filter( app => app.id === v )[ 0 ] || null;
+    }
 };

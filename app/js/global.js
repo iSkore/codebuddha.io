@@ -8,17 +8,21 @@
 import config from './config';
 import configureApplications from './main/configureApplications';
 
-$( document ).ready( () => {
-    configureApplications();
-
+function checkOpenApplication() {
     const currentApplication = sessionStorage.getItem( config.currentApplicationKey );
     if( currentApplication ) {
-        for( let i = 0; i < config.applications.length; i++ ) {
-            if( config.applications[ i ].id === currentApplication ) {
-                config.applications.openApplication();
-                $( config.appModuleId ).modal( 'show' );
-                console.log( currentApplication );
-            }
-        }
+        console.log( currentApplication );
+        const currentApp = config.get( currentApplication );
+
+        console.log( 'currentApp', currentApp );
+        currentApp.openApplication();
+        $( config.appModuleId ).modal( 'show' );
     }
+}
+
+$( document ).ready( () => {
+    configureApplications()
+        .then( () => console.log( config ) )
+        .then( () => checkOpenApplication() )
+        .catch( console.error );
 } );

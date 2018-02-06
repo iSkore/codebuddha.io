@@ -6,7 +6,6 @@
 'use strict';
 
 import config from '../config';
-import { objectId } from '../utils/util';
 import CRC32 from 'faster-crc32';
 
 export default function() {
@@ -16,8 +15,7 @@ export default function() {
         modelFooter  = $( config.appModuleFooterId ),
         appContainer = $( config.appModuleContainerId );
 
-    console.log( config );
-    config.applications.map(
+    config.applications = config.applications.map(
         app => {
             const
                 group = $( '<div>' ),
@@ -27,15 +25,13 @@ export default function() {
                 desc  = $( '<p>' ),
                 open  = $( '<button>' );
 
-            modelTitle.text( app.title );
-
-            modelFooter.html();
-            app.footerItems.forEach(
-                item => modelFooter.append( item )
-            );
-            modelFooter.append( config.defaultCloseButton );
-
             app.openApplication = () => {
+                modelTitle.text( app.title );
+
+                modelFooter.html();
+                app.footerItems.forEach( item => modelFooter.append( item ) );
+                modelFooter.append( config.defaultCloseButton );
+
                 appContainer.html( `<div>${ app.html }</div>` );
                 // app.js.default();
                 console.log( app.js );
@@ -75,9 +71,16 @@ export default function() {
             app.group = group;
             apps.append( group );
 
-            return new CRC32( Buffer.from( JSON.stringify( app ) ) )
-                .then( id => app.id = id )
+            return new CRC32(
+                Buffer.from( JSON.stringify( app ) ),
+                { chunkSize: CRC32.WHOLE, encoding: CRC32.INT }
+            )
+                .then( id => app.id = id[ 0 ] )
                 .then( () => app );
         }
     );
+
+    return Promise.all( config.applications )
+        .then( d => config.applications = d )
+        .catch( console.error );
 }
