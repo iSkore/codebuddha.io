@@ -1,4 +1,4 @@
-version: 0.1
+version: 0.2
 
 phases:
   install:
@@ -7,18 +7,19 @@ phases:
     commands:
       - echo Installing source NPM dependencies...
       - echo $CODEBUILD_SRC_DIR
-      - npm install
+      - apt-get update
+      - apt-get install -y awscli
+      - curl -sL https://deb.nodesource.com/setup_9.x | sudo -E bash -
+      - apt-get install -y nodejs
+      - echo $(node -v)
+      - npm config set loglevel error
+      - npm i -g npm@latest --silent
   build:
     commands:
-      - echo Build started on `date`
-      - echo Compiling the Node.js code
+      - echo Build started on $(date)
+      - npm i
       - npm run prod
   post_build:
     commands:
-      - mkdir -p build
-      - tar jcf build/codebuddah.tar.bz2 ./dist/*
-      - echo Build completed on $(date)
-artifacts:
-  files:
-    - build*/**
-  discard-paths: yes
+      - cd dist
+      - aws s3 sync . s3://codebuddha.io/
