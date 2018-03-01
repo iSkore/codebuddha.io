@@ -5,7 +5,8 @@
 <br>
 <br>
 
-[![build][build]][build-url]
+[![build-status][build-status]][build-status-url]
+[![build-version][build-version]][build-version-url]
 
 [![node][node]][node-url]
 [![npm][npm]][npm-url]
@@ -21,14 +22,17 @@
 
 An open repository of basic applications for developers.
 
+[build-status]: https://codebuddha.io/badges/build_status.svg
+[build-status-url]: https://codebuddha.io
+
+[build-version]: https://codebuddha.io/badges/build_version.svg
+[build-version-url]: https://github.com/iSkore/codebuddha.io/releases/
+
 [node]: https://codebuddha.io/badges/node_version.svg
 [node-url]: https://nodejs.org/
 
 [npm]: https://codebuddha.io/badges/npm_version.svg
 [npm-url]: https://npmjs.com/
-
-[build]: https://codebuddha.io/badges/build_status.svg
-[build-url]: https://codebuddha.io
 
 [license]: https://codebuddha.io/badges/license.svg
 [license-url]: https://github.com/iSkore/codebuddha.io/blob/master/LICENSE

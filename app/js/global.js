@@ -26,8 +26,7 @@ function checkOpenApplication() {
 
 $( document ).ready( () => {
 	$( '#version' )
-		.text( process.env.VERSION )
-		.attr( 'href', `https://github.com/iSkore/codebuddha.io/releases/tag/${process.env.VERSION}` );
+		.attr( 'href', `https://github.com/iSkore/codebuddha.io/releases/tag/${ process.env.VERSION }` );
 	
 	configureApplications()
 		.then( () => console.log( config ) )
