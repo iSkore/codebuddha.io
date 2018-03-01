@@ -19,6 +19,6 @@ phases:
   post_build:
     commands:
       - aws s3 sync ./dist/ s3://codebuddha.io/
-      - PROJECT_VERSION=v$(node -e "console.log( require( './package.json' ).version );")
-      - echo "{\"project_version\":\"$PROJECT_VERSION\"}" | tee build_version.json
+      - BUILD_VERSION=v$(node -e "console.log( require( './package.json' ).version );")
+      - echo "{\"build_version\":\BUILD_VERSION\"}" | tee build_version.json
       - aws s3 mv ./build_version.json s3://codebuddha.io/build_version.json

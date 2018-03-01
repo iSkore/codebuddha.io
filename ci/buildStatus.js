@@ -20,7 +20,7 @@ function copyBuildStatus( status ) {
 	if( status === STATUS.RUNNING ) {
 		CopySource = `${ process.env.BUCKET }/badges/build_running.svg`;
 	} else if( status === STATUS.SUCCEEDED ) {
-		CopySource = `${ process.env.BUCKET }/badges/build_running.svg`;
+		CopySource = `${ process.env.BUCKET }/badges/build_passing.svg`;
 	} else {
 		CopySource = `${ process.env.BUCKET }/badges/build_failing.svg`;
 	}
@@ -42,9 +42,9 @@ exports.handler = function( event, context ) {
 			Bucket: process.env.BUCKET,
 			Key: 'status.json'
 		},
-		BUILD_STATUS_FILE    = {
+		BUILD_VERSION_FILE    = {
 			Bucket: process.env.BUCKET,
-			Key: 'build_status.json'
+			Key: 'build_version.json'
 		},
 		BUILD_BADGE_TEMPLATE = {
 			Bucket: process.env.BUCKET,
@@ -110,14 +110,14 @@ exports.handler = function( event, context ) {
 			.then(
 				d => S3.getObject( BUILD_BADGE_TEMPLATE ).promise()
 					.then( t => t.Body.toString( 'utf8' ) )
-					.then( t => t.replace( /\$\{BUILD_VERSION\}/g, d.project_version ) )
+					.then( t => t.replace( /\$\{BUILD_VERSION\}/g, d.build_version ) )
 					.then( t => BUILD_BADGE.Body = t )
 					.then( () => S3.putObject( BUILD_BADGE ).promise() )
 			)
 			.then( () => context.succeed( 'finished' ) )
 			.catch( context.fail );
 	} else {
-		if( status !== STATUS.RUNNING && status !== STATUS.SUCCEEDED ) {
+		if( status !== STATUS.SUCCEEDED ) {
 			return S3.copyObject( copyBuildStatus( STATUS.FAILED ) ).promise()
 				.then( () => context.succeed( 'finished' ) )
 				.catch( context.fail );
