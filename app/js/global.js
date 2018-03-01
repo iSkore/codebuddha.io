@@ -21,6 +21,8 @@ function checkOpenApplication() {
 }
 
 $( document ).ready( () => {
+	$( '#version' ).text( process.env.VERSION );
+	
 	configureApplications()
 		.then( () => console.log( config ) )
 		.then( () => checkOpenApplication() )
