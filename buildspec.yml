@@ -25,3 +25,6 @@ phases:
       - PROJECT_VERSION=v$(node -e "console.log( require( './package.json' ).version );")
       - echo "{\"passing\":true,\"project_version\":\"$PROJECT_VERSION\"}" | tee build_status.json
       - aws s3 mv ./build_status.json s3://codebuddha.io/build_status.json
+  finalizing:
+  	commands:
+  	  - echo FINALIZING at $(date)
