@@ -4,6 +4,7 @@
 	"description": "An open repository of basic applications for developers.",
 	"main": "index.js",
 	"scripts": {
+		"preversion": "sed -i '1s/^/node_version: $(node -v)\n/' buildspec.yml",
 		"prod": "webpack --env=prod --mode production",
 		"dev": "webpack-dev-server --env=dev --mode development",
 		"uglify": "uglifyjs -c -m -o dist/js/bundle.js -- dist/js/bundle.js",
