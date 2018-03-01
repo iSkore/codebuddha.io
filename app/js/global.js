@@ -10,18 +10,24 @@ import configureApplications from './main/configureApplications';
 
 function checkOpenApplication() {
 	const currentApplication = sessionStorage.getItem( config.currentApplicationKey );
+	
 	if( currentApplication ) {
-		console.log( currentApplication );
 		const currentApp = config.get( currentApplication );
 		
-		console.log( 'currentApp', currentApp );
-		currentApp.openApplication();
-		$( config.appModuleId ).modal( 'show' );
+		if( !currentApp ) {
+			sessionStorage.removeItem( config.currentApplicationKey );
+		} else {
+			console.log( 'currentApp', currentApp );
+			currentApp.openApplication();
+			$( config.appModuleId ).modal( 'show' );
+		}
 	}
 }
 
 $( document ).ready( () => {
-	$( '#version' ).text( process.env.VERSION );
+	$( '#version' )
+		.text( process.env.VERSION )
+		.attr( 'href', `https://github.com/iSkore/codebuddha.io/releases/tag/${process.env.VERSION}` );
 	
 	configureApplications()
 		.then( () => console.log( config ) )

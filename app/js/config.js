@@ -8,11 +8,11 @@
 module.exports = {
 	currentApplicationKey: 'currentApplication',
 	appContainerId: '#appContainer',
+	appContainerCloseId: '#appClose',
 	appModuleId: '#appModule',
 	appModuleTitleId: '#appModuleTitle',
 	appModuleFooterId: '#appModuleFooter',
 	appModuleContainerId: '#appModuleContainer',
-	defaultCloseButton: '<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>',
 	applications: [
 		{
 			title: 'Byte Converter',
@@ -30,6 +30,7 @@ module.exports = {
 		}
 	],
 	get: function( v ) {
+		v = +v;
 		return this.applications.filter( app => app.id === v )[ 0 ] || null;
 	}
 };

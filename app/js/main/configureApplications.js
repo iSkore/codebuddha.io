@@ -13,7 +13,8 @@ export default function() {
 		apps         = $( config.appContainerId ),
 		modelTitle   = $( config.appModuleTitleId ),
 		modelFooter  = $( config.appModuleFooterId ),
-		appContainer = $( config.appModuleContainerId );
+		appContainer = $( config.appModuleContainerId ),
+		appClose     = $( config.appContainerCloseId );
 	
 	config.applications = config.applications.map(
 		app => {
@@ -29,13 +30,25 @@ export default function() {
 				modelTitle.text( app.title );
 				
 				modelFooter.html();
-				app.footerItems.forEach( item => modelFooter.append( item ) );
-				modelFooter.append( config.defaultCloseButton );
+				
+				app.footerItems.forEach(
+					item => modelFooter.append( item )
+				);
 				
 				appContainer.html( `<div>${ app.html }</div>` );
+				
 				// app.js.default();
 				console.log( app.js );
+				
+				appClose.click( () => app.closeApplication() );
+				
 				sessionStorage.setItem( config.currentApplicationKey, app.id );
+			};
+			
+			app.closeApplication = () => {
+				$( config.appModuleId ).modal( 'hide' );
+				
+				sessionStorage.removeItem( config.currentApplicationKey );
 			};
 			
 			group.addClass( 'col-sm mb-5' );
