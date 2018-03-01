@@ -6,13 +6,12 @@ phases:
   pre_build:
     commands:
       - echo Installing source NPM dependencies...
-      - echo $CODEBUILD_SRC_DIR
-      - apt-get update
       - apt-get install -y awscli
       - curl -sL https://deb.nodesource.com/setup_9.x | sudo -E bash -
       - apt-get install -y nodejs
-      - echo $(node -v)
       - npm config set loglevel error
+      - echo "{\"node_version\":\"$(node -v)\",\"npm_version\":\"v$(npm -v)\",\"passing\":failed}" | tee status.json
+      - aws s3 mv ./status.json s3://codebuddha.io/status.json
       - npm i -g npm@latest --silent
   build:
     commands:
@@ -23,3 +22,5 @@ phases:
     commands:
       - cd dist
       - aws s3 sync . s3://codebuddha.io/
+      - echo "{\"node_version\":\"$(node -v)\",\"npm_version\":\"v$(npm -v)\",\"passing\":true}" | tee status.json
+      - aws s3 mv ./status.json s3://codebuddha.io/status.json
