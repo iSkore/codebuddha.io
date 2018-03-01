@@ -1,5 +1,6 @@
 'use strict';
 
+import { version } from '../package.json';
 import { resolve } from 'path';
 import webpack from 'webpack';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
@@ -24,6 +25,9 @@ const
 		'window.jQuery': 'jquery',
 		Popper: [ 'popper.js', 'default' ],
 		AWS: 'aws-sdk'
+	} ),
+	extractVersion = new webpack.EnvironmentPlugin( {
+		VERSION: `v${version}`
 	} );
 
 export default {
@@ -40,7 +44,9 @@ export default {
 		rules: [
 			{
 				test: /\.json$/,
-				loaders: [ 'json-loader' ]
+				use: {
+					loader: 'json-loader'
+				}
 			},
 			{
 				test: /\.(jpe?g|gif|png|svg|woff|ttf|wav|mp3)$/,
@@ -103,6 +109,7 @@ export default {
 		extractSass,
 		extractAssests,
 		extractHtml,
-		includeModules
+		includeModules,
+		extractVersion
 	]
 };

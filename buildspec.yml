@@ -9,9 +9,10 @@ phases:
       - apt-get update
       - apt-get install -y awscli
       - npm config set loglevel error
-      - echo "{\"node_version\":\"$(node -v)\",\"npm_version\":\"v$(npm -v)\",\"passing\":failed}" | tee build_status.json
-      - aws s3 mv ./status.json s3://codebuddha.io/status.json
+      - PROJECT_VERSION=v$(node -e "console.log( require( './package.json' ).version );")
+      - echo "{\"passing\":false,\"project_version\":\"$PROJECT_VERSION\"}" | tee build_status.json
       - aws s3 mv ./build_status.json s3://codebuddha.io/build_status.json
+      - aws s3 mv ./status.json s3://codebuddha.io/status.json
       - npm i -g npm@latest --silent
   build:
     commands:
@@ -21,5 +22,6 @@ phases:
   post_build:
     commands:
       - aws s3 sync ./dist/ s3://codebuddha.io/
-      - echo "{\"node_version\":\"$(node -v)\",\"npm_version\":\"v$(npm -v)\",\"passing\":true}" | tee build_status.json
+      - PROJECT_VERSION=v$(node -e "console.log( require( './package.json' ).version );")
+      - echo "{\"passing\":true,\"project_version\":\"$PROJECT_VERSION\"}" | tee build_status.json
       - aws s3 mv ./build_status.json s3://codebuddha.io/build_status.json
