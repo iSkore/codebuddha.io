@@ -104,7 +104,7 @@ exports.handler = function( event, context ) {
 					]
 				)
 			)
-			.then( () => S3.getObject( BUILD_STATUS_FILE ).promise() )
+			.then( () => S3.getObject( BUILD_VERSION_FILE ).promise() )
 			.then( d => d.Body.toString( 'utf8' ) )
 			.then( d => JSON.parse( d ) )
 			.then(
