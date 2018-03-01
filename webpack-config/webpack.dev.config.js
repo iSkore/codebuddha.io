@@ -7,11 +7,11 @@ import CommonConfig from './webpack.base.config';
 console.log( resolve( __dirname, '../dist' ) );
 
 export default Merge( CommonConfig, {
-    context: resolve( __dirname, '../app' ),
-    devServer: {
-        compress: true,
-        port: 8080,
-        publicPath: '/',
-        contentBase: './dist'
-    }
+	context: resolve( __dirname, '../app' ),
+	devServer: {
+		compress: true,
+		port: 8080,
+		publicPath: '/',
+		contentBase: './dist'
+	}
 } );
