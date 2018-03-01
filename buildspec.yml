@@ -8,6 +8,7 @@ phases:
       - echo Installing source NPM dependencies...
       - apt-get update
       - apt-get install -y awscli
+      - apt-get purge --auto-remove nodejs
       - curl -sL https://deb.nodesource.com/setup_9.x | sudo -E bash -
       - apt-get install -y nodejs
       - npm config set loglevel error
