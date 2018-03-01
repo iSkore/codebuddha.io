@@ -4,8 +4,8 @@
 	"description": "An open repository of basic applications for developers.",
 	"main": "index.js",
 	"scripts": {
-		"prod": "webpack --env=prod",
-		"dev": "webpack-dev-server --env=dev",
+		"prod": "webpack --env=prod --mode production",
+		"dev": "webpack-dev-server --env=dev --mode development",
 		"uglify": "uglifyjs -c -m -o dist/js/bundle.js -- dist/js/bundle.js",
 		"clean": "npm outdated && npm prune",
 		"server": "cd dist/ && http-server -a 0.0.0.0 -p 8080 -c-1",
