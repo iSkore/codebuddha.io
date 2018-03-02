@@ -17,8 +17,8 @@ module.exports = {
 		{
 			title: 'Byte Converter',
 			desc: 'Convert Bytes, Kilobytes, Megabytes, Gigabytes, Terabytes',
-			js: require( './modules/byteConverter/index' ),
-			html: require( './modules/byteConverter/module.html' ),
+			js: import( './modules/byteConverter/index' ),
+			html: import( './modules/byteConverter/module.html' ),
 			footerItems: []
 		},
 		{

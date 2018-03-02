@@ -1,6 +1,10 @@
+/**
+ * Created by mattputipong on 12/11/17.
+ */
+
 'use strict';
 
-import { version } from '../package.json';
+import { version, name } from '../package.json';
 import { resolve } from 'path';
 import webpack from 'webpack';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
@@ -8,26 +12,27 @@ import CopyWebpackPlugin from 'copy-webpack-plugin';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 
 const
-	extractSass    = new ExtractTextPlugin( './css/main.scss' ),
-	extractAssests = new CopyWebpackPlugin( [
-		{
-			from: './assets/',
-			to: '../dist/assets/'
-		}
-	] ),
 	extractHtml    = new HtmlWebpackPlugin( {
+		title: name,
 		template: 'index.html',
-		filename: '../dist/index.html'
+		filename: '../dist/index.html',
+		xhtml: true
 	} ),
-	includeModules = new webpack.ProvidePlugin( {
+	extractModules = new webpack.ProvidePlugin( {
 		$: 'jquery',
 		jQuery: 'jquery',
 		'window.jQuery': 'jquery',
 		Popper: [ 'popper.js', 'default' ],
 		AWS: 'aws-sdk'
 	} ),
+	extractAssests = new CopyWebpackPlugin( [
+		{
+			from: './assets/',
+			to: '../dist/assets/'
+		}
+	] ),
 	extractVersion = new webpack.EnvironmentPlugin( {
-		VERSION: `v${version}`
+		VERSION: `v${ version }`
 	} );
 
 export default {
@@ -43,12 +48,6 @@ export default {
 	module: {
 		rules: [
 			{
-				test: /\.json$/,
-				use: {
-					loader: 'json-loader'
-				}
-			},
-			{
 				test: /\.(jpe?g|gif|png|svg|woff|ttf|wav|mp3)$/,
 				use: {
 					loader: 'file-loader',
@@ -60,28 +59,18 @@ export default {
 				}
 			},
 			{
-				test: /\.scss$/,
+				test: /\.css$/,
 				use: [
-					{
-						loader: 'style-loader'
-					},
-					{
-						loader: 'css-loader'
-					},
-					{
-						loader: 'postcss-loader',
-						options: {
-							plugins: function() {
-								return [
-									require( 'autoprefixer' )
-								];
-							}
-						}
-					},
-					{
-						loader: 'sass-loader'
-					}
+					{ loader: 'style-loader' },
+					{ loader: 'css-loader' }
 				]
+			},
+			{
+				test: /\.scss$/,
+				use: ExtractTextPlugin.extract( {
+					fallback: 'style-loader',
+					use: [ 'css-loader', 'sass-loader' ]
+				} )
 			},
 			{
 				test: /\.(ttf|woff|woff2|svg|eot)$/,
@@ -97,19 +86,28 @@ export default {
 			{
 				test: /\.(html)$/,
 				use: {
-					loader: 'html-loader',
-					options: {
-						// attrs: [':data-src']
-					}
+					loader: 'html-loader'
+				}
+			},
+			{
+				test: /\.json$/,
+				use: {
+					loader: 'json-loader'
 				}
 			}
 		]
 	},
 	plugins: [
-		extractSass,
-		extractAssests,
+		new ExtractTextPlugin( 'styles.css' ),
 		extractHtml,
-		includeModules,
+		extractModules,
+		extractAssests,
 		extractVersion
-	]
+	],
+	node: {
+		dns: 'empty',
+		fs: 'empty',
+		net: 'empty',
+		tls: 'empty'
+	}
 };
